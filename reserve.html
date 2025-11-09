@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reservar — Thunder</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">T</div>
+    <div><div class="brand-title" data-i18n="brand">Thunder Passeios de Lancha</div></div>
+  </div>
+
+  <nav>
+    <a href="index.html#home" data-i18n="home_title">Passeios</a>
+    <a href="gallery.html" data-i18n="gallery_title">Galeria</a>
+    <a href="reserve.html" data-i18n="book_now">Reservar</a>
+  </nav>
+
+  <select id="lang" class="lang-select">
+    <option value="pt">Português</option>
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="zh">中文</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="af">Afrikaans</option>
+  </select>
+</header>
+
+<main class="container">
+  <section class="section">
+    <h1 data-i18n="reserve_title">Reservar Passeio</h1>
+    <p class="small" data-i18n="whatsapp_note">Será direcionado ao WhatsApp para finalizar a reserva.</p>
+
+    <form id="reserveForm" style="margin-top:12px">
+      <div class="form-row">
+        <div style="flex:1">
+          <label data-i18n="name_label">Nome completo</label>
+          <input id="name" type="text" required placeholder="Seu nome" data-i18n-placeholder="name_label">
+        </div>
+        <div style="width:160px">
+          <label data-i18n="people_label">Número de pessoas</label>
+          <input id="people" type="number" min="1" value="2" required>
+        </div>
+      </div>
+
+      <div style="margin-top:10px" class="form-row">
+        <div>
+          <label data-i18n="time_label">Horário disponível</label>
+          <select id="time" required></select>
+        </div>
+        <div>
+          <label data-i18n="payment_label">Forma de pagamento</label>
+          <select id="payment" required>
+            <option value="credit" data-i18n="payment_credit">Crédito (+R$5,00 por pessoa)</option>
+            <option value="debit" data-i18n="payment_debit">Débito (+R$5,00 por pessoa)</option>
+            <option value="pix" data-i18n="payment_pix">Pix</option>
+            <option value="cash" data-i18n="payment_cash">Dinheiro</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="small">
+        <p data-i18n="price_per_person">Preço por pessoa: R$70,00</p>
+        <p data-i18n="preservation_fee">Taxa de preservação: R$10,00 por pessoa</p>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
+        <div><strong data-i18n="total_label">Total</strong>: <span id="total">R$ 0,00</span></div>
+        <button type="submit" class="btn" data-i18n="submit_btn">Enviar reserva por WhatsApp</button>
+      </div>
+
+      <p class="small" style="margin-top:8px" data-i18n="replace_whatsapp">Substitua o número WhatsApp no código pelo seu.</p>
+    </form>
+  </section>
+
+  <section class="section" style="margin-top:12px">
+    <h4 data-i18n="routes_title">Rotas</h4>
+    <p data-i18n="routes_text">Bar molhado, banco de areia para fotos, banho de agila, atrações da garça azul e caranguejos goiamus.</p>
+    <p class="small" data-i18n="location">Localização: Praia de Tibau do Sul — Passeios realizados na Lagoa de Guaraíras.</p>
+  </section>
+</main>
+
+<script>
+// === Preenche horários ===
+const timeSelect = document.getElementById('time');
+const times = ["09:00", "10:20", "11:40", "13:00", "14:20", "15:40", "16:20"];
+times.forEach(t => {
+  const opt = document.createElement('option');
+  opt.value = t;
+  opt.textContent = t;
+  timeSelect.appendChild(opt);
+});
+
+// === Cálculo automático do total ===
+const peopleInput = document.getElementById('people');
+const paymentSelect = document.getElementById('payment');
+const totalEl = document.getElementById('total');
+
+function calcularTotal() {
+  const pessoas = parseInt(peopleInput.value) || 0;
+  const pagamento = paymentSelect.value;
+
+  const precoPorPessoa = 70;
+  const taxaPorPessoa = 5;
+  const adicional = (pagamento === 'credit' || pagamento === 'debit') ? 5 : 0;
+
+  const total = pessoas * precoPorPessoa + pessoas * taxaPorPessoa + pessoas * adicional;
+  totalEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+}
+
+peopleInput.addEventListener('input', calcularTotal);
+paymentSelect.addEventListener('change', calcularTotal);
+document.addEventListener('DOMContentLoaded', calcularTotal);
+
+// === Envio via WhatsApp ===
+document.getElementById('reserveForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const nome = document.getElementById('name').value;
+  const pessoas = document.getElementById('people').value;
+  const horario = document.getElementById('time').value;
+  const pagamento = document.getElementById('payment').value;
+  const total = totalEl.textContent;
+
+  const msg = `Olá! Quero reservar um passeio de lancha.%0A
+  Nome: ${nome}%0A
+  Pessoas: ${pessoas}%0A
+  Horário: ${horario}%0A
+  Pagamento: ${pagamento}%0A
+  Total: ${total}`;
+
+  // Substitua pelo seu número de WhatsApp
+  const numero = "5584999999999";
+  window.open(`https://wa.me/${numero}?text=${msg}`, "_blank");
+});
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>

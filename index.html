@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thunder — Passeios de Lancha</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ===== MENU FIXO E RESPONSIVO ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  z-index: 1000;
+  border-bottom: 1px solid #ddd;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  background: #0078ff;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  gap: 16px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.lang-select {
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+/* ---- BOTÃO HAMBÚRGUER ---- */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 25px;
+  height: 18px;
+  justify-content: space-between;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+}
+
+/* ---- RESPONSIVO ---- */
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 15px 0;
+    display: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .lang-select {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+  }
+}
+
+main {
+  margin-top: 80px; /* espaço pro menu fixo */
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">T</div>
+    <div>
+      <div class="brand-title" data-i18n="brand">Thunder Passeios de Lancha</div>
+      <div style="font-size:12px;opacity:0.85" data-i18n="home_sub">Experiências privadas...</div>
+    </div>
+  </div>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav id="nav">
+    <a href="index.html#home" data-i18n="home_title">Passeios</a>
+    <a href="gallery.html" target="_self" data-i18n="gallery_title">Galeria</a>
+    <a href="reserve.html" data-i18n="book_now">Reservar</a>
+  </nav>
+
+  <select id="lang" class="lang-select" aria-label="Idioma">
+    <option value="pt">Português</option>
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="zh">中文</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="af">Afrikaans</option>
+  </select>
+</header>
+
+<main class="container">
+  <section id="home" class="hero">
+    <div class="text">
+      <h1 data-i18n="home_title">Passeios de Lancha na Lagoa de Guaraíras</h1>
+      <p data-i18n="home_sub">Experiências privadas e seguras em Tibau do Sul — bancos de areia, bar molhado e fauna local.</p>
+      <p style="margin-top:12px">
+        <a class="btn" href="reserve.html" data-i18n="book_now">Reservar agora</a>
+        <a class="btn secondary" href="gallery.html" style="margin-left:8px" data-i18n="explore">Explorar rotas</a>
+      </p>
+    </div>
+
+    <div class="photos">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.PiRiMV6zm0YV_b5eP4sfZAHaE6?cb=ucfimgc2&rs=1&pid=ImgDetMain&o=7&rm=3" alt="lancha">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.WRkF98V1NUH7lOvvfOUA8wHaDV?cb=ucfimgc2&rs=1&pid=ImgDetMain&o=7&rm=3" alt="povo">
+      <img src="https://tse1.explicit.bing.net/th/id/OIP.t4uku1MgOqiIUnGb8qJXcgHaNK?cb=ucfimgc2&rs=1&pid=ImgDetMain&o=7&rm=3" alt="banco de areia">
+      <img src="https://fcf51e9cb1.clvaw-cdnwnd.com/22d6f83774c3e261d0bcb7364e77ab83/200003735-bf10cbf10e/praia%20de%20Tibau%20do%20Sul.jpg?ph=fcf51e9cb1" alt="pôr do sol">
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 data-i18n="routes_title">Rotas & Atrações</h2>
+    <p data-i18n="routes_text">Bar molhado, banco de areia para fotos, banho de agila, avistamento da garça azul (espécie em risco) e caranguejos goiamus.</p>
+    <div class="grid" style="margin-top:12px">
+      <div class="card">
+        <img src="https://a.cdn-hotels.com/gdcs/production179/d89/b00b428d-0ad4-4698-b1ce-4da363884a5e.jpg?impolicy=fcrop&w=1600&h=1066&q=medium" alt="referencia">
+        <div class="meta"><div>referencia</div><div class="badge">Ícone</div></div>
+      </div>
+      <div class="card">
+        <img src="https://fcf51e9cb1.clvaw-cdnwnd.com/22d6f83774c3e261d0bcb7364e77ab83/200004529-26dde26de1/lagoa%20Guara%C3%ADras%20-%20bancos%20de%20areia-0.jpeg?ph=fcf51e9cb1" alt="banco de areia">
+        <div class="meta"><div>Banco de areia</div><div class="badge">Fotografia</div></div>
+      </div>
+      <div class="card">
+        <img src="https://abracepipa.com.br/wp-content/uploads/2021/09/abracepipa3-1024x674.jpeg" alt="fauna">
+        <div class="meta"><div>Fauna local</div><div class="badge">Observação</div></div>
+      </div>
+    </div>
+    <p style="margin-top:12px" class="small" data-i18n="duration">Duração estimada: 1h10 a 1h30</p>
+    <p class="small" data-i18n="location">Local: Praia de Tibau do Sul — Passeios na Lagoa de Guaraíras.</p>
+  </section>
+
+  <section class="section">
+    <h3>Informações rápidas</h3>
+    <p class="small">Preço: <strong>R$70,00</strong> por pessoa + <strong>R$10,00</strong> taxa de preservação por pessoa. (Crédito acrescenta R$5,00 fixos).</p>
+    <p class="small" data-i18n="whatsapp_note">Será direcionado ao WhatsApp para finalizar a reserva.</p>
+  </section>
+
+  <footer class="footer">
+    <div>Localização: Tibau do Sul — Lagoa de Guaraíras. Reserva via WhatsApp. &copy; Tunder</div>
+  </footer>
+</main>
+
+<script>
+document.getElementById('menu-toggle').addEventListener('click', function() {
+  document.getElementById('nav').classList.toggle('active');
+});
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
