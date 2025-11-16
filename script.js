@@ -25,7 +25,7 @@ const translations = {
     total_label: "Total",
     submit_btn: "Enviar reserva por WhatsApp",
     whatsapp_note: "Será direcionado ao WhatsApp para finalizar a reserva.",
-    replace_whatsapp: "Substitua o número WhatsApp no código pelo seu."
+    replace_whatsapp: ""
   },
   en: {
     brand: "Thunder Boat Tours",
@@ -52,7 +52,7 @@ const translations = {
     total_label: "Total",
     submit_btn: "Send reservation via WhatsApp",
     whatsapp_note: "You'll be redirected to WhatsApp to finish the booking.",
-    replace_whatsapp: "Replace the WhatsApp number in code with yours."
+    replace_whatsapp: ""
   },
   es: {
     brand: "Thunder Paseos en Lancha",
@@ -79,7 +79,7 @@ const translations = {
     total_label: "Total",
     submit_btn: "Enviar reserva por WhatsApp",
     whatsapp_note: "Serás dirigido a WhatsApp para finalizar la reserva.",
-    replace_whatsapp: "Reemplaza el número de WhatsApp en el código por el tuyo."
+    replace_whatsapp: ""
   },
   zh: { // Chinese simplified
     brand: "Thunder 快艇游",
@@ -106,8 +106,7 @@ const translations = {
     total_label: "总额",
     submit_btn: "通过 WhatsApp 发送预订",
     whatsapp_note: "将跳转到 WhatsApp 完成预订。",
-    replace_whatsapp: "请在代码中将 WhatsApp 号码替换为您的号码。"
-  },
+    replace_whatsapp: ""
   fr: {
     brand: "Thunder Tours en Bateau",
     home_title: "Balades en bateau sur la Lagoa de Guaraíras",
@@ -133,7 +132,7 @@ const translations = {
     total_label: "Total",
     submit_btn: "Envoyer la réservation via WhatsApp",
     whatsapp_note: "Vous serez redirigé vers WhatsApp pour finaliser la réservation.",
-    replace_whatsapp: "Remplacez le numéro WhatsApp dans le code par le vôtre."
+    replace_whatsapp: ""
   },
   de: {
     brand: "Thunder Bootstouren",
@@ -160,7 +159,7 @@ const translations = {
     total_label: "Gesamt",
     submit_btn: "Reservierung per WhatsApp senden",
     whatsapp_note: "Sie werden zu WhatsApp weitergeleitet, um die Buchung abzuschließen.",
-    replace_whatsapp: "Ersetzen Sie die WhatsApp-Nummer im Code durch Ihre eigene."
+    replace_whatsapp: ""
   },
   af: { // Afrikaans used for "africano"
     brand: "Thunder Boottoere",
@@ -187,7 +186,7 @@ const translations = {
     total_label: "Totaal",
     submit_btn: "Stuur bespreking via WhatsApp",
     whatsapp_note: "Jy sal na WhatsApp herlei word om die bespreking te voltooi.",
-    replace_whatsapp: "Vervang die WhatsApp-nommer in die kode met joune."
+    replace_whatsapp: ""
   }
 };
 
@@ -266,7 +265,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       const payment = document.getElementById('payment').value;
       const msg = encodeURIComponent(
         `Reserva Tunder\nNome: ${name}\nPessoas: ${people}\nHorário: ${time}\nPagamento: ${payment}\nObservações: `);
-      // WhatsApp number: replace with your business number
+      // WhatsApp number: 5584999045759
       const waNumber = '5584999045759'; // substitute your number (country code +55...)
       // open WhatsApp (web or app)
       const url = `https://wa.me/$5584999045759?text=${msg}`;
@@ -275,5 +274,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 
 });
+
 
 
