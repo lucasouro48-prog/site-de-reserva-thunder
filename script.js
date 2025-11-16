@@ -267,10 +267,11 @@ document.addEventListener('DOMContentLoaded',()=>{
       const msg = encodeURIComponent(
         `Reserva Tunder\nNome: ${name}\nPessoas: ${people}\nHorário: ${time}\nPagamento: ${payment}\nObservações: `);
       // WhatsApp number: replace with your business number
-      const waNumber = '5584991694313'; // substitute your number (country code +55...)
+      const waNumber = '5584999045759'; // substitute your number (country code +55...)
       // open WhatsApp (web or app)
       const url = `https://wa.me/${waNumber}?text=${msg}`;
       window.open(url,'_blank');
     });
   }
+
 });
