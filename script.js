@@ -269,9 +269,10 @@ document.addEventListener('DOMContentLoaded',()=>{
       // WhatsApp number: replace with your business number
       const waNumber = '5584999045759'; // substitute your number (country code +55...)
       // open WhatsApp (web or app)
-      const url = `https://wa.me/${waNumber}?text=${msg}`;
+      const url = `https://wa.me/${5584999045759}?text=${msg}`;
       window.open(url,'_blank');
     });
   }
 
 });
+
