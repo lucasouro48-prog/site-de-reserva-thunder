@@ -102,15 +102,18 @@ const totalEl = document.getElementById('total');
 
 function calcularTotal() {
   const pessoas = parseInt(peopleInput.value) || 0;
-  const pagamento = paymentSelect.value)|| 0 ;
+  const pagamento = paymentSelect.value;
 
   const precoPorPessoa = 70;
   const taxaPorPessoa = 5;
+
+  // Soma +5 somente em crédito ou débito
   const adicional = (pagamento === 'credit' || pagamento === 'debit') ? 5 : 0;
 
-  const total = pessoas * precoPorPessoa + pessoas * taxaPorPessoa + pessoas * adicional;
+  const total = pessoas * (precoPorPessoa + taxaPorPessoa + adicional);
   totalEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
+
 
 peopleInput.addEventListener('input', calcularTotal);
 paymentSelect.addEventListener('change', calcularTotal);
@@ -134,14 +137,10 @@ document.getElementById('reserveForm').addEventListener('submit', function(e) {
 
   // Substitua pelo seu número de WhatsApp
   const numero = "5584999045759";
-  window.open(`https://5584999045759?text=${msg}`, "_blank");
+  window.open(`https://wa.me/${numero}?text=${msg}`, "_blank");
 });
 </script>
 
 <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
