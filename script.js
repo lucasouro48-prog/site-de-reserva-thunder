@@ -190,90 +190,102 @@ const translations = {
   }
 };
 
-// helper to set language
+// aplicar idioma
 function setLanguage(lang){
   const t = translations[lang] || translations['pt'];
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key = el.dataset.i18n;
     if(t[key]) el.textContent = t[key];
   });
-  // placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
     const key = el.dataset.i18nPlaceholder;
     if(t[key]) el.placeholder = t[key];
   });
 }
 
-// generate times 09:00 to 16:20 every 20 min
+// gerar horários
 function generateTimes(){
   const times = [];
   let h = 9, m = 0;
   while (h < 17){
-    const hh = String(h).padStart(2,'0'), mm=String(m).padStart(2,'0');
+    const hh = String(h).padStart(2,'0');
+    const mm = String(m).padStart(2,'0');
     times.push(`${hh}:${mm}`);
     m += 20;
     if(m>=60){ h+=1; m-=60; }
     if(h===16 && m>20) break;
   }
-  // ensure last 16:20 included
   if(!times.includes("16:20")) times.push("16:20");
   return times;
 }
 
-// fill time select if present
 document.addEventListener('DOMContentLoaded',()=>{
-  // language chooser
-  const langEl = document.getElementById('lang') || document.querySelector('.lang-select');
+
+  // idioma
+  const langEl = document.getElementById('lang');
   if(langEl){
     langEl.addEventListener('change', ()=> setLanguage(langEl.value));
     setLanguage(langEl.value || 'pt');
   } else setLanguage('pt');
 
-  // populate times in reserve page
+  // horários
   const timeSelect = document.getElementById('time');
   if(timeSelect){
     generateTimes().forEach(t=>{
-      const opt = document.createElement('option'); opt.value=t; opt.textContent=t;
+      const opt = document.createElement('option');
+      opt.value=t;
+      opt.textContent=t;
       timeSelect.appendChild(opt);
     });
   }
 
-  // price calc
+  // cálculo do total
   const peopleInput = document.getElementById('people');
   const paymentSelect = document.getElementById('payment');
   const totalBox = document.getElementById('total');
-  function calc(){
-    const people = Math.max(1, parseInt(peopleInput.value||1));
-    const base = 70;
-    const preservation = 10;
-    let total = people * (base + preservation);
-    if(paymentSelect && paymentSelect.value === 'credit') total += 5; // flat surcharge
-    if(totalBox) totalBox.textContent = `R$ ${total.toFixed(2)}`;
-  }
-  if(peopleInput) peopleInput.addEventListener('input', calc);
-  if(paymentSelect) paymentSelect.addEventListener('change', calc);
-  calc();
 
-  // form submit -> open WhatsApp with message
+  function calcularTotal() {
+    const pessoas = parseInt(peopleInput.value) || 0;
+    const pagamento = paymentSelect.value;
+
+    const precoPorPessoa = 70;
+    const taxaPreservacaoPorPessoa = 10;
+
+    // AQUI ESTÁ O AJUSTE CORRETO
+    const adicionalPorPessoa = (pagamento === 'credit' || pagamento === 'debit') ? 5 : 0;
+
+    const total =
+        pessoas * precoPorPessoa +
+        pessoas * taxaPreservacaoPorPessoa +
+        pessoas * adicionalPorPessoa;
+
+    totalBox.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+  }
+
+  peopleInput.addEventListener('input', calcularTotal);
+  paymentSelect.addEventListener('change', calcularTotal);
+  calcularTotal();
+
+  // envio WhatsApp
   const form = document.getElementById('reserveForm');
   if(form){
     form.addEventListener('submit', e=>{
       e.preventDefault();
+
       const name = document.getElementById('name').value.trim();
-      const people = parseInt(document.getElementById('people').value||1);
+      const people = parseInt(peopleInput.value||1);
       const time = document.getElementById('time').value;
       const payment = document.getElementById('payment').value;
+      const total = totalBox.textContent;
+
       const msg = encodeURIComponent(
-        `Reserva Tunder\nNome: ${name}\nPessoas: ${people}\nHorário: ${time}\nPagamento: ${payment}\nObservações: `);
-      // WhatsApp number: 5584999045759
-      const waNumber = '5584999045759'; // substitute your number (country code +55...)
-      // open WhatsApp (web or app)
-      const url = `https://wa.me/$5584999045759?text=${msg}`;
-      window.open(url,'_blank');
+        `Reserva Thunder\nNome: ${name}\nPessoas: ${people}\nHorário: ${time}\nPagamento: ${payment}\nTotal: ${total}`
+      );
+
+      const waNumber = "5584999045759";
+
+      window.open(`https://wa.me/${waNumber}?text=${msg}`, "_blank");
     });
   }
 
 });
-
-
-
